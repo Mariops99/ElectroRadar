@@ -49,6 +49,16 @@ function formatElectrolinera(electrolinera) {
     cargadores: []
   }
 
+  // Formatear el lugar de la electrolinera
+  switch(electrolinera['egi:typeOfSite'][0]) {
+    case 'onstreet':
+      electrolineraFormateada.lugar = 'En la calle';
+      break;
+    default:
+      electrolineraFormateada.lugar = 'Desconocido';
+      break;
+  }
+
   for (let cargador of electrolinera['egi:energyInfrastructureStation'][0]['egi:refillPoint']) {
     objetoCargador = {
         id: cargador['$']['id'],
