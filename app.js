@@ -18,7 +18,7 @@ https.get(url, (res) => {
       } else {
         const listadoElectrolineras = result['d2:payload']['egi:energyInfrastructureTable'][0];
         const primeraElectrolinera = listadoElectrolineras['egi:energyInfrastructureSite'][0];
-        console.log(formatElectrolinera(primeraElectrolinera).cargadores);
+        console.log(formatElectrolinera(primeraElectrolinera));
       }
     });
   });
@@ -96,7 +96,7 @@ function formatElectrolinera(electrolinera) {
 
       // Formatear la potencia del conector
       objetoConector['potencia'] = parseInt(conector['egi:maxPowerAtSocket'][0]) / 1000 + 'kW';
-      
+
       objetoCargador['conectores'].push(objetoConector);
       }
       electrolineraFormateada['cargadores'].push(objetoCargador);
