@@ -1,0 +1,14 @@
+{
+  "name": "electroradar",
+  "version": "1.0.0",
+  "description": "Se conecta con la base de datos de la DGT y muestra todas las electrolineras actualizadas cada 24 horas",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mario Prieto Sanlés",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
