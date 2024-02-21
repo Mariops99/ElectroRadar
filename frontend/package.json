@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "astro": "^4.4.1",
-    "ol": "^8.2.0"
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.8"
   }
 }
