@@ -27,17 +27,17 @@ https.get(url, (res) => {
 });
 
 function formatElectrolinera(electrolinera) {
+
+  /**
+   * @type {electrolinera} electrolineraFormateada
+   */
   const electrolineraFormateada = {
     id: electrolinera['$']['id'],
     nombre: electrolinera['fac:name'][0]['com:values'][0]['com:value'][0]['_'],
     horario: electrolinera['fac:operatingHours'][0]['fac:label'][0],
     lugar: electrolinera['egi:typeOfSite'],
     direccion: {
-      calle: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][0]['locx:text'][0]['com:values'][0]['com:value'][0]['_'],
       codigoPostal: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:postcode'][0],
-      localidad: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][1]['locx:text'][0]['com:values'][0]['com:value'][0]['_'],
-      provincia: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][2]['locx:text'][0]['com:values'][0]['com:value'][0]['_'],
-      comunidadAutonoma: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][3]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
     },
     coordenadas: {
       latitud: electrolinera['fac:locationReference'][0]['loc:coordinatesForDisplay'][0]['loc:latitude'][0],
@@ -48,13 +48,38 @@ function formatElectrolinera(electrolinera) {
     cargadores: []
   }
 
-  /**
-  Me gustaría modificar los datos de la dirección (localidad, provincia, comunidad autónoma) ya que el string muestra Municipio: y el municipio que sea. Quitar el Municipio: y dejar solo el nombre del municipio.
-        const direccionString = "Municipio: Vigo";
-        const municipio = direccionString.substring(11);
-        console.log(municipio); // Output: Vigo
-  No se si utilizar este método para modificar los datos de la dirección, ya que no se si es el correcto para este XML loco 
-  */
+    const localidad = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][1]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
+
+    if (localidad === undefined) {
+      electrolineraFormateada.direccion.localidad = "Desconocido";
+    } else {
+      electrolineraFormateada.direccion.localidad = localidad.split(':').trim();
+    }
+
+    const provincia = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][2]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
+
+    if (provincia === undefined) {
+      electrolineraFormateada.direccion.provincia = "Desconocido";
+    } else {
+      electrolineraFormateada.direccion.provincia = provincia.split(':').trim();
+    }
+    
+    const calle = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][0]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
+
+    if (calle === undefined) {
+      electrolineraFormateada.direccion.calle = "Desconocido";
+    } {
+      electrolineraFormateada.direccion.calle = calle.split(':').trim();
+    }
+
+    const comunidadAutonoma = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][3]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
+
+    if (comunidadAutonoma === undefined) {
+      electrolineraFormateada.direccion.comunidadAutonoma = "Desconocido";
+    } else {
+      electrolineraFormateada.direccion.comunidadAutonoma = comunidadAutonoma.split(':').trim();
+    }
+  
 
   // Formatear el lugar de la electrolinera
   if(electrolinera['egi:typeOfSite'] === undefined) {
