@@ -53,7 +53,8 @@ function formatElectrolinera(electrolinera) {
     if (localidad === undefined) {
       electrolineraFormateada.direccion.localidad = "Desconocido";
     } else {
-      electrolineraFormateada.direccion.localidad = localidad.split(':').trim();
+      console.log(localidad);
+      electrolineraFormateada.direccion.localidad = localidad.split(':')[1].trim();
     }
 
     const provincia = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][2]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
@@ -61,7 +62,7 @@ function formatElectrolinera(electrolinera) {
     if (provincia === undefined) {
       electrolineraFormateada.direccion.provincia = "Desconocido";
     } else {
-      electrolineraFormateada.direccion.provincia = provincia.split(':').trim();
+      electrolineraFormateada.direccion.provincia = provincia.split(':')[1].trim();
     }
     
     const calle = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][0]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
@@ -69,7 +70,7 @@ function formatElectrolinera(electrolinera) {
     if (calle === undefined) {
       electrolineraFormateada.direccion.calle = "Desconocido";
     } {
-      electrolineraFormateada.direccion.calle = calle.split(':').trim();
+      electrolineraFormateada.direccion.calle = calle.split(':')[1].trim();
     }
 
     const comunidadAutonoma = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][3]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
@@ -77,7 +78,7 @@ function formatElectrolinera(electrolinera) {
     if (comunidadAutonoma === undefined) {
       electrolineraFormateada.direccion.comunidadAutonoma = "Desconocido";
     } else {
-      electrolineraFormateada.direccion.comunidadAutonoma = comunidadAutonoma.split(':').trim();
+      electrolineraFormateada.direccion.comunidadAutonoma = comunidadAutonoma.split(':')[1].trim();
     }
   
 
