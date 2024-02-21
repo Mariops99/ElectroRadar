@@ -48,7 +48,13 @@ function formatElectrolinera(electrolinera) {
     cargadores: []
   }
 
-  //Me gustaría modificar los datos de la dirección (localidad, provincia, comunidad autónoma) ya que el string muestra Municipio: y el municipio que sea. Quitar el Municipio: y dejar solo el nombre del municipio.
+  /**
+  Me gustaría modificar los datos de la dirección (localidad, provincia, comunidad autónoma) ya que el string muestra Municipio: y el municipio que sea. Quitar el Municipio: y dejar solo el nombre del municipio.
+        const direccionString = "Municipio: Vigo";
+        const municipio = direccionString.substring(11);
+        console.log(municipio); // Output: Vigo
+  No se si utilizar este método para modificar los datos de la dirección, ya que no se si es el correcto para este XML loco 
+  */
 
   // Formatear el lugar de la electrolinera
   if(electrolinera['egi:typeOfSite'] === undefined) {
