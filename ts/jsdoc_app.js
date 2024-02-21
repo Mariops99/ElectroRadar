@@ -47,3 +47,5 @@
  * voltaje: string
  * }} conector
  */
+
+export {}

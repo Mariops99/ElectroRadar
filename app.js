@@ -160,3 +160,7 @@ function formatElectrolinera(electrolinera) {
   // Devolver la electrolinera formateada
   return electrolineraFormateada;
 }
+
+/**
+ * @typedef {import('./ts/jsdoc_app.js').electrolinera} electrolinera
+ */
