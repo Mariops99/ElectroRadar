@@ -27,6 +27,10 @@ https.get(url, (res) => {
 });
 
 function formatElectrolinera(electrolinera) {
+
+  /**
+   * @type {electrolinera} electrolineraFormateada
+   */
   const electrolineraFormateada = {
     id: electrolinera['$']['id'],
     nombre: electrolinera['fac:name'][0]['com:values'][0]['com:value'][0]['_'],
@@ -35,7 +39,9 @@ function formatElectrolinera(electrolinera) {
     direccion: {
       calle: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][0]['locx:text'][0]['com:values'][0]['com:value'][0]['_'],
       codigoPostal: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:postcode'][0],
+
       localidad: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][1]['locx:text'][0]['com:values'][0]['com:value'][0]['_'],
+
       provincia: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][2]['locx:text'][0]['com:values'][0]['com:value'][0]['_'],
       comunidadAutonoma: electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][3]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
     },
@@ -48,13 +54,12 @@ function formatElectrolinera(electrolinera) {
     cargadores: []
   }
 
-  /**
-  Me gustaría modificar los datos de la dirección (localidad, provincia, comunidad autónoma) ya que el string muestra Municipio: y el municipio que sea. Quitar el Municipio: y dejar solo el nombre del municipio.
-        const direccionString = "Municipio: Vigo";
-        const municipio = direccionString.substring(11);
-        console.log(municipio); // Output: Vigo
-  No se si utilizar este método para modificar los datos de la dirección, ya que no se si es el correcto para este XML loco 
-  */
+
+  /** Deje comentada la primera por si acaso */
+  // electrolineraFormateada.direccion.calle = electrolineraFormateada.direccion.calle.split(':')[1].trim();
+  electrolineraFormateada.direccion.localidad = electrolineraFormateada.direccion.localidad.split(':')[1].trim();
+  electrolineraFormateada.direccion.provincia = electrolineraFormateada.direccion.provincia.split(':')[1].trim();
+  electrolineraFormateada.direccion.comunidadAutonoma = electrolineraFormateada.direccion.comunidadAutonoma.split(':')[1].trim();
 
   // Formatear el lugar de la electrolinera
   if(electrolinera['egi:typeOfSite'] === undefined) {
