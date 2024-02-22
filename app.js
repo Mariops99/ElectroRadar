@@ -104,6 +104,7 @@ function formatElectrolinera(electrolinera) {
     
     // Un cargador puede tener varios conectores
     for(let conector of cargador['egi:connector']) {
+
       objetoConector = {
         tipo: conector['egi:connectorType'][0],
         formato: conector['egi:connectorFormat'][0],

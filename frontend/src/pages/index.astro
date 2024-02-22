@@ -13,7 +13,7 @@
   import leaFlet from "leaflet";
 
   const map = leaFlet.map('map').setView([40.416908437891306, -3.7041708138023304], 14);
-  leaFlet.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png").addTo(map);
+  leaFlet.tileLayer("https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png").addTo(map);
 
   /** Cambiamos el iconito de la marca del mapa
    * LEER https://rstudio.github.io/leaflet/articles/markers.html PARA AGRUPAR LAS MARCAS SI HAY MUCHOS CARGADORES EN UN SITIO
@@ -29,7 +29,11 @@
     })
   */
 
-  leaFlet.marker([40.41, -3.68])
+  leaFlet.marker([40.471565, -3.697116])
   .addTo(map)
-  .bindPopup("<b>Electrolinera</b><br />Esto es HTML").openPopup(); //Por defecto está abierto el popup con openPopup()
+  .bindPopup(`<b>Ahorramás Emilia</b>
+  <br />24x7 horas<br />
+  <br /> EDP CLIENTES SAU <br />
+  <br />Emilia 46, Madrid 28029`)
+   .openPopup(); //Por defecto está abierto el popup con openPopup() Si está activo por defecto el mapa hace zoom a la marca con .openPopup()
 </script>
