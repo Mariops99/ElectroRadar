@@ -11,9 +11,23 @@
 
 <script>
   import leaFlet from "leaflet";
+  import { getElectrolineras } from "../js/apiController";
 
   const map = leaFlet.map('map').setView([40.416908437891306, -3.7041708138023304], 14);
   leaFlet.tileLayer("https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png").addTo(map);
+
+  getElectrolineras().then((electrolineras) => {
+    electrolineras.forEach((electrolinera) => {
+      leaFlet.marker([electrolinera.latitude, electrolinera.longitude])
+        .addTo(map)
+        .bindPopup(`<b>${electrolinera.title}</b>
+        <br />${electrolinera.openingHours}<br />
+        <br /> ${electrolinera.provider} <br />
+        <br />${electrolinera.address}`)
+        .openPopup();
+    });
+  });
+
 
   /** Cambiamos el iconito de la marca del mapa
    * LEER https://rstudio.github.io/leaflet/articles/markers.html PARA AGRUPAR LAS MARCAS SI HAY MUCHOS CARGADORES EN UN SITIO
