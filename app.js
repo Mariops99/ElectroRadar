@@ -49,16 +49,13 @@ function formatElectrolinera(electrolinera) {
   }
 
     const localidad = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][1]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
-
     if (localidad === undefined) {
       electrolineraFormateada.direccion.localidad = "Desconocido";
     } else {
-      console.log(localidad);
       electrolineraFormateada.direccion.localidad = localidad.split(':')[1].trim();
     }
 
     const provincia = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][2]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
-
     if (provincia === undefined) {
       electrolineraFormateada.direccion.provincia = "Desconocido";
     } else {
@@ -66,7 +63,6 @@ function formatElectrolinera(electrolinera) {
     }
     
     const calle = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][0]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
-
     if (calle === undefined) {
       electrolineraFormateada.direccion.calle = "Desconocido";
     } {
@@ -74,7 +70,6 @@ function formatElectrolinera(electrolinera) {
     }
 
     const comunidadAutonoma = electrolinera['fac:locationReference'][0]['loc:_locationReferenceExtension'][0]['loc:facilityLocation'][0]['locx:address'][0]['locx:addressLine'][3]['locx:text'][0]['com:values'][0]['com:value'][0]['_']
-
     if (comunidadAutonoma === undefined) {
       electrolineraFormateada.direccion.comunidadAutonoma = "Desconocido";
     } else {

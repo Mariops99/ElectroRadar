@@ -10,13 +10,26 @@
 </style>
 
 <script>
-  import L from "leaflet";
+  import leaFlet from "leaflet";
 
-  const map = L.map('map').setView([40.411908437891306, -3.7041708138023304], 15);
-  L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png").addTo(map);
+  const map = leaFlet.map('map').setView([40.416908437891306, -3.7041708138023304], 14);
+  leaFlet.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png").addTo(map);
 
-  // L.marker([51.5, -0.09])
-  //   .addTo(map)
-  //   .bindPopup("A pretty CSS popup.<br> Easily customizable.")
-  //   .openPopup();
+  /** Cambiamos el iconito de la marca del mapa
+   * LEER https://rstudio.github.io/leaflet/articles/markers.html PARA AGRUPAR LAS MARCAS SI HAY MUCHOS CARGADORES EN UN SITIO
+    var greenIcon = leaFlet.icon({
+    iconUrl: 'leaf-green.png',
+    shadowUrl: 'leaf-shadow.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    })
+  */
+
+  leaFlet.marker([40.41, -3.68])
+  .addTo(map)
+  .bindPopup("<b>Electrolinera</b><br />Esto es HTML").openPopup(); //Por defecto está abierto el popup con openPopup()
 </script>
