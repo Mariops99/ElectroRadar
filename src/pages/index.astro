@@ -18,13 +18,7 @@
 
   getElectrolineras().then((electrolineras) => {
     electrolineras.forEach((electrolinera) => {
-      leaFlet.marker([electrolinera.latitude, electrolinera.longitude])
-        .addTo(map)
-        .bindPopup(`<b>${electrolinera.title}</b>
-        <br />${electrolinera.openingHours}<br />
-        <br /> ${electrolinera.provider} <br />
-        <br />${electrolinera.address}`)
-        .openPopup();
+      console.log(electrolinera);
     });
   });
 
