@@ -1,15 +1,19 @@
 {
-  "name": "electroradar",
-  "version": "1.0.0",
-  "description": "Se conecta con la base de datos de la DGT y muestra todas las electrolineras actualizadas cada 24 horas",
-  "main": "app.js",
+  "name": "frontend",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
-  "author": "Mario Prieto Sanlés",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
-    "xml2js": "^0.6.2"
+    "astro": "^4.4.1",
+    "leaflet": "^1.9.4"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.8"
   }
 }

@@ -1,4 +1,3 @@
-const express = require('express');
 const https = require('https');
 const parseString = require('xml2js').parseString;
 
@@ -104,7 +103,6 @@ function formatElectrolinera(electrolinera) {
     
     // Un cargador puede tener varios conectores
     for(let conector of cargador['egi:connector']) {
-
       objetoConector = {
         tipo: conector['egi:connectorType'][0],
         formato: conector['egi:connectorFormat'][0],
