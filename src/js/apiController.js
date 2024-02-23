@@ -1,38 +1,33 @@
-/**
- * @returns {Promise<electrolinera[]>}
- * @description Obten las electrolineras formateadas
- * */
-export async function getElectrolineras() {
-  const res = await fetch("/api/electrolineras");
+import { parseString } from "xml2js";
 
-  if (!res.ok) {
-    throw new Error("Error al obtener las electrolineras");
-  }
+const url =
+  "https://infocar.dgt.es/datex2/v3/miterd/EnergyInfrastructureTablePublication/electrolineras.xml";
+
+export async function getElectrolineras() {
+  const res = await fetch(url, {
+    mode: "no-cors",
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+
+  // if (!res.ok) {
+  //   throw new Error("Error al obtener las electrolineras");
+  // }
 
   const data = await res.text();
 
-  const parser = new DOMParser();
-
-  const xml = parser.parseFromString(data, "text/xml");
-
-  // El navegador ya trae un parser de XML (funciona muy similar al de HTML), pero no es compatible con como lo hemos formateado anteriormente
-  // hay que ver si intentar hacerlo con este parser o buscar una librería que nos ayude a hacerlo porque la de xml2js no furrulaba y browser-xml2js tampoco
-  console.log(xml);
-
-  const electrolineras = Array.from(xml.querySelector("#ELECTROLINERAS")?.children || []);
-
-
-  // NO FUNCIONA (de momento) PORQUE NO HEMOS FORMATEADO BIEN EL XML
-  console.log(electrolineras);
-  electrolineras.map(formatElectrolinera);
-
+  return await new Promise((resolve, reject) => {
+    parseString(data, (err, result) => {
+      const electrolineras =
+        result["d2:payload"]["egi:energyInfrastructureTable"][0][
+          "egi:energyInfrastructureSite"
+        ].map(formatElectrolinera);
+      resolve(electrolineras);
+    });
+  });
 }
 
-/**
- * @param {object} electrolinera
- * @returns {electrolinera}
- * @description Formatea una electrolinera
- * */
 function formatElectrolinera(electrolinera) {
   /**
    * @type {electrolinera} electrolineraFormateada
