@@ -25,7 +25,7 @@ export async function GET(_params, _request) {
   return new Response(data, {
     status: 200,
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "text/plain",
     },
   });
 }
