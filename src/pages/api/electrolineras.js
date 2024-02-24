@@ -25,8 +25,19 @@ export async function GET(_params, _request) {
 
   const data = await res.text();
 
-  return await new Promise((resolve, reject) => {
+  return await new Promise((resolve, _reject) => {
     parseString(data, (err, result) => {
+      if (err) {
+        return resolve(
+          new Response(JSON.stringify({ error: "Error al parsear el XML" }), {
+            status: 500,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+        );
+      }
+
       const electrolineras =
         result["d2:payload"]["egi:energyInfrastructureTable"][0][
           "egi:energyInfrastructureSite"
@@ -156,6 +167,9 @@ export function formatElectrolinera(electrolinera) {
   for (let cargador of electrolinera["egi:energyInfrastructureStation"][0][
     "egi:refillPoint"
   ]) {
+    /**
+     * @type {cargador} objetoCargador
+     * */
     let objetoCargador = {
       id: cargador["$"]["id"],
       nombre: cargador["fac:name"][0]["com:values"][0]["com:value"][0]["_"],
@@ -164,6 +178,9 @@ export function formatElectrolinera(electrolinera) {
 
     // Un cargador puede tener varios conectores
     for (let conector of cargador["egi:connector"]) {
+      /**
+       * @type {conector} objetoConector
+       */
       let objetoConector = {
         tipo: conector["egi:connectorType"][0],
         formato: conector["egi:connectorFormat"][0],
@@ -179,42 +196,42 @@ export function formatElectrolinera(electrolinera) {
       // Formatear el tipo de cable del conector
       switch (conector["egi:connectorType"][0]) {
         case "iec62196T2":
-          objetoConector["tipo"] = "Tipo 2";
+          objetoConector.tipo = "Tipo 2";
           break;
         case "iec62196T2COMBO":
-          objetoConector["tipo"] = "CCS";
+          objetoConector.tipo = "CCS";
           break;
         case "chademo":
-          objetoConector["tipo"] = "CHAdeMO";
+          objetoConector.tipo = "CHAdeMO";
           break;
         default:
-          objetoConector["tipo"] = conector["egi:connectorType"][0]; // Dejar el valor original mientras no conozcamos todos los tipos de cables de recarga
+          objetoConector.tipo = conector["egi:connectorType"][0]; // Dejar el valor original mientras no conozcamos todos los tipos de cables de recarga
           break;
       }
 
       // Formatear el formato del conector
       switch (conector["egi:connectorFormat"][0]) {
         case "cableMode3":
-          objetoConector["formato"] = "Cable";
+          objetoConector.formato = "Cable";
           break;
         case "socket":
-          objetoConector["formato"] = "Conector";
+          objetoConector.formato = "Conector";
           break;
         default:
-          objetoConector["formato"] = conector["egi:connectorFormat"][0]; // Dejar el valor original mientras no conozcamos todos los formatos de conectores
+          objetoConector.formato = conector["egi:connectorFormat"][0]; // Dejar el valor original mientras no conozcamos todos los formatos de conectores
           break;
       }
 
       // Formatear la potencia del conector
-      objetoConector["potencia"] =
+      objetoConector.potencia =
         parseInt(conector["egi:maxPowerAtSocket"][0]) / 1000 + "kW";
 
       //Meter el objeto conector en el array de conectores
-      objetoCargador["conectores"].push(objetoConector);
+      objetoCargador.conectores.push(objetoConector);
     }
 
     //Meter el objeto cargador en el array de cargadores
-    electrolineraFormateada["cargadores"].push(objetoCargador);
+    electrolineraFormateada.cargadores.push(objetoCargador);
   }
 
   // Devolver la electrolinera formateada
@@ -222,5 +239,7 @@ export function formatElectrolinera(electrolinera) {
 }
 
 /**
- * @typedef {import('../../js/ts/jsdoc_app.js').electrolinera} electrolinera
+ * @typedef {import('../../js/ts/electrolineras_jsdoc.js').electrolinera} electrolinera
+ * @typedef {import('../../js/ts/electrolineras_jsdoc.js').conector} conector
+ * @typedef {import('../../js/ts/electrolineras_jsdoc.js').cargador} cargador
  */
