@@ -1,5 +1,7 @@
 
-
+/**
+ * @returns {Promise<electrolinera[]>}
+ */
 export async function getElectrolineras() {
   const res = await fetch("/api/electrolineras", {
     headers: {
@@ -14,3 +16,7 @@ export async function getElectrolineras() {
   return await res.json();
 
 }
+
+/**
+ * @typedef {import('./ts/electrolineras_jsdoc.js').electrolinera} electrolinera
+ */
